@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Form</title>
+    <script src='https://cxpiusa1formui01cdnsa01-endpoint.azureedge.net/tip/FormCapture/FormCapture.bundle.js'></script>
+
+</head>
+<body>
+
+    <h2>Form 1</h2>
+
+    <form id="form1" action="/action_page.php" method="post">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required>
+
+        <br>
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required>
+
+        <br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <h2>Form 2</h2>
+
+    <form id="form2" action="/action_page.php" method="post">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" name="firstName" required>
+
+        <br>
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" name="lastName" required>
+
+        <br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <br>
+        <input type="radio" id="male" name="gender" value="male">
+        <label for="male">Male</label><br>
+        <input type="radio" id="female" name="gender" value="female">
+        <label for="female">Female</label><br>
+        <input type="submit" value="Submit">
+    </form>
+    <script>
+    // NOTE: for reference see https://go.microsoft.com/fwlink/?linkid=2250770
+
+    const mappings = [
+        {
+            FormFieldName: "firstName",
+            DataverseFieldName: "firstname",
+        },
+        {
+            FormFieldName: "lastName",
+            DataverseFieldName: "lastname",
+        },
+        {
+            FormFieldName: "email",
+            DataverseFieldName: "emailaddress1",
+        },
+
+    ];
+
+    d365mktforms.waitForElement("#form1") // example: "#form1" as a selector for form with id="form1"
+    .then(form => {
+        form.addEventListener("submit", (e) => {
+            const serializedForm = d365mktforms.serializeForm(form, mappings);
+            console.log(JSON.stringify(serializedForm));
+            const payload = serializedForm.SerializedForm.build();
+
+            const captureConfig = {
+                FormId: "6443c445-2082-ee11-8178-000d3a34d56a",
+                FormApiUrl: "https://public-usa.mkt-tip.dynamics.com/api/v1.0/orgs/435ecdb3-c97c-ee11-8175-002248080e98/landingpageforms"
+            }
+            d365mktforms.submitForm(captureConfig, payload);
+        }, false);
+    });
+    </script>
+
+    <script>
+    // NOTE: for reference see https://go.microsoft.com/fwlink/?linkid=2250770
+    const mappings = [
+        {
+            FormFieldName: "firstName",
+            DataverseFieldName: "firstname",
+        },
+        {
+            FormFieldName: "lastName",
+            DataverseFieldName: "lastname",
+        },
+        {
+            FormFieldName: "email",
+            DataverseFieldName: "emailaddress1",
+        },
+        {
+            FormFieldName: "gender",
+            DataverseFieldName: "gendercode",
+            DataverseFieldValue: [
+                { FormValue: "male", DataverseValue: "1" }, // Male
+                { FormValue: "female", DataverseValue: "2" }, // Female
+            ],
+        },
+
+    ];
+    d365mktforms.waitForElement("#form2") // example: "#form1" as a selector for form with id="form1"
+    .then(form => {
+        form.addEventListener("submit", (e) => {
+            const serializedForm = d365mktforms.serializeForm(form, mappings);
+            console.log(JSON.stringify(serializedForm));
+            const payload = serializedForm.SerializedForm.build();
+
+            const captureConfig = {
+                FormId: "00697f76-2882-ee11-8178-000d3a34d56a",
+                FormApiUrl: "https://public-usa.mkt-tip.dynamics.com/api/v1.0/orgs/435ecdb3-c97c-ee11-8175-002248080e98/landingpageforms"
+            }
+            d365mktforms.submitForm(captureConfig, payload);
+        }, false);
+    });
+    </script>
+
+
+</body>
+</html>
