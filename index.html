@@ -32,7 +32,7 @@
 <script>
     // NOTE: for reference see https://go.microsoft.com/fwlink/?linkid=2250770
 
-    d365mktforms.waitForElement("#form1") // example: "#form1" as a selector for form with id="form1"
+    d365mktformcapture.waitForElement("#form1") // example: "#form1" as a selector for form with id="form1"
     .then(form => {
     const mappings = [
         {
@@ -59,7 +59,7 @@
                 FormId: "423cf2b4-e689-ee11-be36-002248294a47",
                 FormApiUrl: "https://public-usa.mkt-tip.dynamics.com/api/v1.0/orgs/59af13b4-772f-ee11-8476-00224820c440/landingpageforms"
             }
-            d365mktforms.submitForm(captureConfig, payload);
+            d365mktformcapture.submitForm(captureConfig, payload);
         }, true);
     });
 </script>
